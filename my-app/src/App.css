@@ -1,0 +1,61 @@
+.App {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.header {
+  margin: auto;
+  justify-content: center;
+}
+
+.fact {
+  min-width: 400px;
+  max-width: 400px;
+  padding: 0px 12px;
+  border-style: solid;
+  border-color: grey;
+  border-radius: 12px;
+}
+
+.currFact {
+  width: 424px;
+  justify-content: center;
+  justify-self: center;
+  margin: auto;
+}
+
+.facts {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;  /* Internet Explorer 10+ */
+}
+
+.facts::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+
+.facts .fact:first-child {
+  margin-left: auto;
+}
+
+.facts .fact:last-child {
+  margin-right: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
