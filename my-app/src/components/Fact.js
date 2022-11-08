@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class Fact extends React.Component {
-    render() {
-        return (
-            <div className='fact'>
-                {this.props.curr && <p>Current Fact: </p>}
-                <p id='fact'>{this.props.fact}</p>
-            </div>
-        )
-    }
-} 
+const Fact = (props) => {
+    const [favorite, setFavorite] = useState(false);
 
-export default Fact; 
+    return (
+        <div className='fact' key={props.fact}
+            style={{
+                backgroundColor: favorite ? 'yellow' : 'white'
+            }}
+            onClick={() => setFavorite(!favorite)}
+        >
+            {props.curr && <p>Current Fact: </p>}
+            <p id='fact'>{props.fact}</p>
+        </div>
+    )
+}
+
+export default Fact;

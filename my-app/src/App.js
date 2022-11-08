@@ -1,11 +1,12 @@
 import Fact from './components/Fact';
 import Button from './components/Button';
-import * as ReactDOM from 'react-dom';
 import './App.css';
 import { useEffect, useState } from 'react';
 
-function getFact(callback) {
-  return fetch("https://catfact.ninja/fact").then().then(callback);
+const getFact = async () => {
+  const response = await fetch("https://catfact.ninja/fact");
+  const data = await response.json();
+  return data.fact;
 }
 
 const App = () => {
@@ -13,11 +14,17 @@ const App = () => {
   const [page, setPage] = useState(0);
   const pageSize = 10, maxPages = Math.floor((facts.length - 1)/ pageSize);
 
-  const getFact = async () => {
-    const response = await fetch("https://catfact.ninja/fact");
-    const data = await response.json();
-    setFacts([data.fact, ...facts]);
-  }
+  const handleFavorite = () => {
+    console.log(Fact.favorite);
+  };
+
+  useEffect(() => { 
+    async function setInitialFact() {
+      setFacts([await getFact()]);
+    }
+
+    setInitialFact();
+  }, []);
 
   return (
     <div className="App">
@@ -28,7 +35,7 @@ const App = () => {
       <div className='currFact'>
         <Fact curr={true} fact={facts[0]}/>
       </div>
-      <div class = 'buttons'>
+      <div className='buttons'>
         <Button 
           text={'Previous'} 
           disabled={page === 0}
@@ -36,7 +43,7 @@ const App = () => {
         />
         <Button
           text={'Get New Fact'}
-          onClick={() => getFact()}
+          onClick={async () => setFacts([await getFact(), ...facts])}
         />
         <Button 
             text={'Next'} 
@@ -44,9 +51,9 @@ const App = () => {
             onClick={() => setPage(page + 1)}
         />
       </div>
-      <div class = 'facts'>
+      <div className='facts'>
         {facts.slice(1 + page * pageSize, (page + 1) * pageSize)
-          .map(fact => <Fact fact={fact}/>)}
+          .map(fact => <Fact fact={fact} key={fact}/>)}
       </div>
     </div>
   );
